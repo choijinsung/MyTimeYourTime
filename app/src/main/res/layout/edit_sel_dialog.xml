@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="300dp"
+              android:layout_height="150dp"
+              android:layout_gravity="center"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="10dp"
+              android:background="#FFFFFFFF">
+
+    <Button
+            android:id="@+id/edit_sel_ttab_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="수강과목시간표 작성"
+            android:textColor="#FFFFFFFF"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:background="#FFCE0068"/>
+
+    <Button
+            android:id="@+id/edit_sel_schdl_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="스케줄 작성"
+            android:textColor="#FFFFFFFF"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:background="#FF1B9229"/>
+
+</LinearLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="290dp"
+              android:layout_height="290dp"
+              android:layout_gravity="center"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="10dp"
+              android:background="#FFFFFFFF">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+        <Button
+                android:id="@+id/del_sel_ttab_btn"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:text="수강과목시간표\n선택 삭제"
+                android:textColor="#FFFFFFFF"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:background="#FFCE0068"/>
+
+        <Button
+                android:id="@+id/del_sel_schdl_btn"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:text="스케줄\n선택 삭제"
+                android:textColor="#FFFFFFFF"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:background="#FF1B9229"/>
+
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/del_sel_entire_ttab_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="수강과목시간표 전체 삭제"
+            android:textColor="#FFFFFFFF"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:background="#FFCE0068"/>
+
+    <Button
+            android:id="@+id/del_sel_entire_schdl_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="스케줄 전체 삭제"
+            android:textColor="#FFFFFFFF"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:background="#FF1B9229"/>
+
+    <Button
+            android:id="@+id/del_sel_entire_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="전체 삭제"
+            android:textColor="#FFFFFFFF"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:background="#FF7910DA"/>
+
+</LinearLayout>
