@@ -95,14 +95,15 @@ public class MainActivity extends Activity implements OnClickListener {
   private OnClickListener selTtabClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
-      Toast.makeText(MainActivity.this, "111", Toast.LENGTH_SHORT).show();
+      Intent intent = new Intent(getApplicationContext(), SelTtabActivity.class);
+      startActivityForResult(intent, 1);
     }
   };
 
   private OnClickListener selSchdlClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
-      Toast.makeText(MainActivity.this, "222", Toast.LENGTH_SHORT).show();
+
     }
   };
 

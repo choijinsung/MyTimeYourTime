@@ -21,6 +21,10 @@
                 android:name=".SplashActivity"
                 android:label="@string/app_name"/>
 
+        <activity
+                android:name=".SelTtabActivity"
+                android:label="@string/app_name"/>
+
     </application>
 
 </manifest>
