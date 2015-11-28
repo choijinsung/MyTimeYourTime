@@ -16,7 +16,7 @@ public class EditSelDialog extends Dialog {
   private Button schdlBtn;
 
   private View.OnClickListener selTtabClickListener;
-  private View.OnClickListener selSchdlClickListener;
+  private View.OnClickListener wrSchdlClickListener;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -30,22 +30,22 @@ public class EditSelDialog extends Dialog {
     setContentView(R.layout.edit_sel_dialog);
 
     setLayout();
-    setClickListener(selTtabClickListener, selSchdlClickListener);
+    setClickListener(selTtabClickListener, wrSchdlClickListener);
   }
 
   public EditSelDialog(Context context) {
     super(context, android.R.style.Theme_Translucent_NoTitleBar);
   }
 
-  public EditSelDialog(Context context, View.OnClickListener selTtabClickListener, View.OnClickListener selSchdlClickListener ) {
+  public EditSelDialog(Context context, View.OnClickListener selTtabClickListener, View.OnClickListener wrSchdlClickListener ) {
     super(context, android.R.style.Theme_Translucent_NoTitleBar);
     this.selTtabClickListener = selTtabClickListener;
-    this.selSchdlClickListener = selSchdlClickListener;
+    this.wrSchdlClickListener = wrSchdlClickListener;
   }
 
-  private void setClickListener(View.OnClickListener selTtabClickListener, View.OnClickListener selSchdlClickListener) {
+  private void setClickListener(View.OnClickListener selTtabClickListener, View.OnClickListener wrSchdlClickListener) {
     ttabBtn.setOnClickListener(selTtabClickListener);
-    schdlBtn.setOnClickListener(selSchdlClickListener);
+    schdlBtn.setOnClickListener(wrSchdlClickListener);
   }
 
   private void setLayout() {

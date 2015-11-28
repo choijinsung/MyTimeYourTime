@@ -100,17 +100,18 @@ public class MainActivity extends Activity implements OnClickListener {
     }
   };
 
-  private OnClickListener selSchdlClickListener = new OnClickListener() {
+  private OnClickListener wrSchdlClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
-
+      Intent intent = new Intent(getApplicationContext(), WrSchdlActivity.class);
+      startActivityForResult(intent, 1);
     }
   };
 
   private void createEditDialog() {
     final View innerView = getLayoutInflater().inflate(R.layout.edit_sel_dialog, null);
 
-    editSelDialog = new EditSelDialog(this, selTtabClickListener, selSchdlClickListener);
+    editSelDialog = new EditSelDialog(this, selTtabClickListener, wrSchdlClickListener);
     editSelDialog.show();
   }
 
