@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,10 +18,11 @@ import java.util.ArrayList;
 public class MainActivity extends Activity implements OnClickListener {
 
   ListView mainTimeListView;
-  GridView mainTimeGridView;
 
   private EditSelDialog editSelDialog;
   private DelSelDialog delSelDialog;
+
+  Button btn1, btn13;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,13 @@ public class MainActivity extends Activity implements OnClickListener {
 
     Button main_del_btn = (Button)findViewById(R.id.main_del_btn);
     main_del_btn.setOnClickListener(this);
+
+    Button main_add_frn_btn = (Button)findViewById(R.id.main_add_frn_btn);
+    main_add_frn_btn.setOnClickListener(this);
+
+    btn1 = (Button)findViewById(R.id.btn1);
+
+    btn13 = (Button)findViewById(R.id.btn13);
 
     ArrayList<MainTimeDTO> mainTimeList = new ArrayList<MainTimeDTO>();
 
@@ -62,17 +69,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
     mainTimeListView.setAdapter(mainTimeAdapter);
 
-    ArrayList<MainTimeGridDTO> mainTimeGrid = new ArrayList<MainTimeGridDTO>();
-
-    for(int i=0; i<900; i++)
-      mainTimeGrid.add(new MainTimeGridDTO());
-
-    mainTimeGridView = (GridView)findViewById(R.id.main_time_gridview);
-
-    MainTimeGridAdapter mainTimeGridAdapter = new MainTimeGridAdapter(getApplicationContext(), R.layout.main_time_grid_content, mainTimeGrid);
-
-    mainTimeGridView.setAdapter(mainTimeGridAdapter);
-
     startActivity(new Intent(this, SplashActivity.class));
   }
 
@@ -85,6 +81,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
       case R.id.main_del_btn:
         createDelDialog();
+        break;
+
+      case R.id.main_add_frn_btn:
         break;
 
       default:
