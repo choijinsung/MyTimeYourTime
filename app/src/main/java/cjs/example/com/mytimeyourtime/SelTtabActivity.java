@@ -26,7 +26,6 @@ public class SelTtabActivity extends Activity implements View.OnClickListener {
   private ListView timeTableListView;
   CourseDBHandler handler;
   UserDBHandler uhandler;
-  Cursor cursor, ucursor;
   private TimeConfDialog timeConfDialog;
   private String[] courseName;
   private String[] courseColor;
@@ -224,7 +223,6 @@ public class SelTtabActivity extends Activity implements View.OnClickListener {
     handler.insert(51, 637, 669);
 
     uhandler = UserDBHandler.open(getApplicationContext());
-    uhandler.delete();
 
   }
 
@@ -261,42 +259,70 @@ public class SelTtabActivity extends Activity implements View.OnClickListener {
         if(text != null)
           text.setText(str);
 
-        CheckBox cb = (CheckBox)v.findViewById(R.id.timetable_list_cb);
+        final CheckBox cb = (CheckBox)v.findViewById(R.id.timetable_list_cb);
+
+        final Cursor ucursor = uhandler.selectByCode(Integer.toString(checkBoxPosition));
+
+        if(ucursor != null && ucursor.getCount() > 0)
+          listItem.add(checkBoxPosition);
+
+        ucursor.close();
+
         if(cb != null) {
+
           cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-              if(b) {
+              if (b) {
 
                 int course_start_time, course_end_time;
 
-                cursor = handler.selectByCode(Integer.toString(checkBoxPosition));
+                Cursor cursor = handler.selectByCode(Integer.toString(checkBoxPosition));
 
-                if(cursor != null && cursor.getCount() != 0)
+                if (cursor != null && cursor.getCount() != 0)
                   cursor.moveToFirst();
+
+                Cursor ucursor2 = null;
 
                 do {
 
                   course_start_time = cursor.getInt(2);
                   course_end_time = cursor.getInt(3);
-                  ucursor = uhandler.selectByTime(Integer.toString(course_start_time), Integer.toString(course_end_time));
+                  ucursor2 =
+                      uhandler.selectByTime(Integer.toString(course_start_time),
+                                            Integer.toString(course_end_time));
 
-                  if(ucursor.getCount() > 0) {
+                  if (ucursor2.getCount() > 0) {
+
+                    for (int i = 0; i < listItem.size(); i++)
+                      if (listItem.get(i) == checkBoxPosition) {
+                        ucursor2.close();
+                        cursor.close();
+                        return;
+                      }
+
+                    cb.setChecked(false);
                     createConfDialog();
+
+                    ucursor2.close();
+                    cursor.close();
                     return;
                   }
 
-                } while(cursor.moveToNext());
+                } while (cursor.moveToNext());
 
-                for(int i = 0; i < listItem.size(); i++)
-                  if(listItem.get(i) == checkBoxPosition)
+                for (int i = 0; i < listItem.size(); i++)
+                  if (listItem.get(i) == checkBoxPosition) {
+                    ucursor2.close();
+                    cursor.close();
                     return;
+                  }
 
                 listItem.add(checkBoxPosition);
 
-                if(cursor != null && cursor.getCount() != 0)
+                if (cursor != null && cursor.getCount() != 0)
                   cursor.moveToFirst();
 
                 do {
@@ -310,12 +336,15 @@ public class SelTtabActivity extends Activity implements View.OnClickListener {
                   uhandler.insert(code, start_time, end_time, name, color);
                   uhandler.selectAll();
 
-                } while(cursor.moveToNext());
+                } while (cursor.moveToNext());
+
+                ucursor2.close();
+                cursor.close();
 
               } else {
 
-                for(int i = 0; i < listItem.size(); i++) {
-                  if(listItem.get(i) == checkBoxPosition) {
+                for (int i = 0; i < listItem.size(); i++) {
+                  if (listItem.get(i) == checkBoxPosition) {
 
                     listItem.remove(i);
                     uhandler.deleteByCode(Integer.toString(checkBoxPosition));
@@ -344,7 +373,7 @@ public class SelTtabActivity extends Activity implements View.OnClickListener {
           if(!isChecked)
             cb.setChecked(false);
 
-        }
+         }
       }
 
       return v;

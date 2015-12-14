@@ -69,7 +69,10 @@ public class CourseDBHandler {
 
     db = helper.getReadableDatabase();
     Cursor c = db.rawQuery("SELECT * FROM course WHERE (start_time >= ? and start_time <= ?) "
-                           + "or (end_time >= ? and end_time <= ?) ", new String[]{ start_time, end_time, start_time, end_time });
+                           + "or (end_time >= ? and end_time <= ?) "
+                           + "or (start_time <= ? and end_time >= ?) "
+                           + "or (start_time <= ? and end_time >= ?) ",
+                           new String[]{ start_time, end_time, start_time, end_time, start_time, start_time, end_time, end_time});
 
     if(c != null && c.getCount() != 0) {
       c.moveToFirst();

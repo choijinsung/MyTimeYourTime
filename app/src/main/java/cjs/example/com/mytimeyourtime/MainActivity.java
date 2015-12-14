@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements OnClickListener {
 
+  private UserDBHandler uhandler;
   ListView mainTimeListView;
 
   private EditSelDialog editSelDialog;
@@ -69,6 +70,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
     mainTimeListView.setAdapter(mainTimeAdapter);
 
+    uhandler = UserDBHandler.open(getApplicationContext());
+
     startActivity(new Intent(this, SplashActivity.class));
   }
 
@@ -117,7 +120,8 @@ public class MainActivity extends Activity implements OnClickListener {
   private OnClickListener delTtabClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
-      Toast.makeText(MainActivity.this, "333", Toast.LENGTH_SHORT).show();
+      Intent intent = new Intent(getApplicationContext(), SelTtabActivity.class);
+      startActivityForResult(intent, 1);
     }
   };
 
@@ -138,7 +142,7 @@ public class MainActivity extends Activity implements OnClickListener {
   private OnClickListener delEntireSchdlClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
-      Toast.makeText(MainActivity.this, "666", Toast.LENGTH_SHORT).show();
+      uhandler.deleteByCode("0");
     }
   };
 

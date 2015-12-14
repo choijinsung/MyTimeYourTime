@@ -69,6 +69,14 @@ public class UserDBHandler {
 
   }
 
+  public Cursor selectByCode(String code) {
+
+    db = helper.getReadableDatabase();
+    Cursor c = db.rawQuery("SELECT * FROM user WHERE code = ?", new String[]{ code });
+
+    return c;
+  }
+
   public Cursor selectByTime(String start_time, String end_time) {
 
     db = helper.getReadableDatabase();

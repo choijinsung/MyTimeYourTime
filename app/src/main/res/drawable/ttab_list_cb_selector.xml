@@ -5,9 +5,22 @@
 
     <item
             android:state_checked="true"
+            android:state_selected="true"
             android:drawable="@drawable/ttab_list_btn_pressed"/>
 
     <item
+            android:state_checked="true"
+            android:state_selected="false"
+            android:drawable="@drawable/ttab_list_btn_pressed"/>
+
+    <item
+            android:state_checked="false"
+            android:state_selected="true"
+            android:drawable="@drawable/ttab_list_btn_nonpressed"/>
+
+    <item
+            android:state_checked="false"
+            android:state_selected="false"
             android:drawable="@drawable/ttab_list_btn_nonpressed"/>
 
 </selector>

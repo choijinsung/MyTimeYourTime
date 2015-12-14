@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="300dp"
+              android:layout_height="150dp"
+              android:layout_gravity="center"
+              android:gravity="center"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="10dp"
+              android:background="#FFFFFFFF">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시간이 중복되었거나 누락된 정보"
+            android:textColor="#FFCE0068"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="혹은 입력할 수 없는 정보입니다!"
+            android:textColor="#FFCE0068"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+</LinearLayout>
