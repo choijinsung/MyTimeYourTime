@@ -142,7 +142,7 @@ public class MainActivity extends Activity implements OnClickListener {
   private OnClickListener delEntireSchdlClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
-      uhandler.deleteByCode("0");
+      uhandler.deleteByCode("100");
     }
   };
 

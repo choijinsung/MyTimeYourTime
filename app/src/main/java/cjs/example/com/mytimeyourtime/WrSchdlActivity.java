@@ -405,7 +405,7 @@ public class WrSchdlActivity extends Activity implements View.OnClickListener{
     if(ucursor.getCount() > 0)
       createWrongDialog();
     else {
-      uhandler.insert(0, start_time, end_time, name, color);
+      uhandler.insert(100, start_time, end_time, name, color);
       uhandler.selectAll();
     }
 
