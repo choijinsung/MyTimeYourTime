@@ -263,8 +263,21 @@ public class SelTtabActivity extends Activity implements View.OnClickListener {
 
         final Cursor ucursor = uhandler.selectByCode(Integer.toString(checkBoxPosition));
 
-        if(ucursor != null && ucursor.getCount() > 0)
-          listItem.add(checkBoxPosition);
+        if(ucursor != null && ucursor.getCount() > 0) {
+
+          boolean flag = false;
+
+          for(int i = 0; i < listItem.size(); i++) {
+            if (listItem.get(i) == checkBoxPosition) {
+              flag = true;
+              break;
+            }
+          }
+
+          if(!flag)
+            listItem.add(checkBoxPosition);
+
+        }
 
         ucursor.close();
 

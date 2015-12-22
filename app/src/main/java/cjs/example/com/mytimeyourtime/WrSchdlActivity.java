@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -397,9 +396,6 @@ public class WrSchdlActivity extends Activity implements View.OnClickListener{
     if(start_time > end_time)
       createWrongDialog();
 
-    Log.i("ddd", day+" "+start_hour+" "+start_minute+" "+start_ampm+" "+end_hour+" "+end_minute+" "+end_ampm+" "+name+" "+color);
-    Log.i("ddd", start_time + " " + end_time);
-
     ucursor = uhandler.selectByTime(Integer.toString(start_time), Integer.toString(start_time));
 
     if(ucursor.getCount() > 0)
@@ -407,10 +403,9 @@ public class WrSchdlActivity extends Activity implements View.OnClickListener{
     else {
       uhandler.insert(100, start_time, end_time, name, color);
       uhandler.selectAll();
+      setResult(1);
+      finish();
     }
-
-    setResult(1);
-    finish();
 
   }
 
