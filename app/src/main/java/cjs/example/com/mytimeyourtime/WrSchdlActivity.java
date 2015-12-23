@@ -30,7 +30,9 @@ public class WrSchdlActivity extends Activity implements View.OnClickListener{
   Spinner end_hour_spin, end_minute_spin, end_ampm_spin;
 
   EditText schdl_name;
-  String name, color;
+  String name = null, color = null;
+
+  boolean ifWrongFlag = false;
 
   static ArrayList<Integer> hour = new ArrayList<Integer>();
   static ArrayList<Integer> minute = new ArrayList<Integer>();
@@ -245,12 +247,19 @@ public class WrSchdlActivity extends Activity implements View.OnClickListener{
   public void onClick(View v) {
     switch(v.getId()) {
       case R.id.wr_schdl_btn:
-        if(schdl_name == null)
-          createWrongDialog();
+
+        if(schdl_name == null || color == null)
+          ifWrongFlag = true;
+
         name = schdl_name.getText().toString();
+        if(name.length() == 0)
+          ifWrongFlag = true;
+
         insertSchedule(day, start_hour, start_minute, start_ampm,
                        end_hour, end_minute, end_ampm, name, color);
+
         break;
+
       case R.id.btn1:
         color = "#FB0867";
         break;
@@ -348,7 +357,7 @@ public class WrSchdlActivity extends Activity implements View.OnClickListener{
     if(start_ampm == "am") {
 
       if(start_hour < 7 || start_hour > 11)
-        createWrongDialog();
+        ifWrongFlag = true;
       else {
         sh = start_hour - 7;
         start_time = 180*d + 12*sh + sm;
@@ -357,7 +366,7 @@ public class WrSchdlActivity extends Activity implements View.OnClickListener{
     } else {
 
       if(start_hour >= 10 && start_hour < 12)
-        createWrongDialog();
+        ifWrongFlag = true;
       else {
         if(start_hour == 12)
           sh = 5;
@@ -371,7 +380,7 @@ public class WrSchdlActivity extends Activity implements View.OnClickListener{
     if(end_ampm == "am") {
 
       if(end_hour < 7 || end_hour > 11)
-        createWrongDialog();
+        ifWrongFlag = true;
       else {
         eh = end_hour - 7;
         end_time = 180*d + 12*eh + em;
@@ -380,9 +389,9 @@ public class WrSchdlActivity extends Activity implements View.OnClickListener{
     } else {
 
       if(end_hour == 11)
-        createWrongDialog();
+        ifWrongFlag = true;
       else if(end_hour == 10 && end_minute != 0)
-        createWrongDialog();
+        ifWrongFlag = true;
       else {
         if(end_hour == 12)
           eh = 5;
@@ -394,12 +403,17 @@ public class WrSchdlActivity extends Activity implements View.OnClickListener{
     }
 
     if(start_time > end_time)
-      createWrongDialog();
+      ifWrongFlag = true;
 
     ucursor = uhandler.selectByTime(Integer.toString(start_time), Integer.toString(start_time));
 
     if(ucursor.getCount() > 0)
+      ifWrongFlag = true;
+
+    if(ifWrongFlag) {
       createWrongDialog();
+      ifWrongFlag = false;
+    }
     else {
       uhandler.insert(100, start_time, end_time, name, color);
       uhandler.selectAll();
