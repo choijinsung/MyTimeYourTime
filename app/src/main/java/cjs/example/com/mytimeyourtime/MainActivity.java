@@ -128,7 +128,8 @@ public class MainActivity extends Activity implements OnClickListener {
   private OnClickListener delSchdlClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
-      Toast.makeText(MainActivity.this, "444", Toast.LENGTH_SHORT).show();
+      Intent intent = new Intent(getApplicationContext(), ShowSchdlActivity.class);
+      startActivityForResult(intent, 1);
     }
   };
 

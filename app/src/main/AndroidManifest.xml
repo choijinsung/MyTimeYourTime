@@ -30,7 +30,7 @@
                 android:label="@string/app_name"/>
 
         <activity
-                android:name=".UserDBActivity"
+                android:name=".ShowSchdlActivity"
                 android:label="@string/app_name"/>
 
     </application>
