@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 /**
  * Created by cjs on 2015-12-12.
@@ -90,28 +89,12 @@ public class UserDBHandler {
 
   }
 
-  public void selectAll() {
+  public Cursor selectAll() {
 
     db = helper.getReadableDatabase();
     Cursor c = db.rawQuery("SELECT * FROM user", null);
 
-    if(c != null && c.getCount() != 0) {
-      c.moveToFirst();
-
-      do {
-
-        int _id = c.getInt(0);
-        int code = c.getInt(1);
-        int start_time = c.getInt(2);
-        int end_time = c.getInt(3);
-        String name = c.getString(4);
-        String color = c.getString(5);
-
-        Log.i("myTag", _id + " " + code + " " + start_time + " " + end_time + " " + name + " " + color);
-
-      } while (c.moveToNext());
-    }
-
+    return c;
   }
 
 }

@@ -2,6 +2,7 @@ package cjs.example.com.mytimeyourtime;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +24,9 @@ public class ShowSchdlActivity extends Activity implements View.OnClickListener 
 
   private String[] testStringArray;
   private ListView scheduleListView;
-  CourseDBHandler handler;
   UserDBHandler uhandler;
+  Cursor ucursor;
+  int index;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,33 +38,83 @@ public class ShowSchdlActivity extends Activity implements View.OnClickListener 
     Button del_schdl_btn = (Button)findViewById(R.id.del_schdl_btn);
     del_schdl_btn.setOnClickListener(this);
 
-    testStringArray = new String[]{ "독서\n월요일 9:00 am ~ 10:00 am",
-                                       "운동\n수요일 1:00 pm ~ 2:00 pm",
-                                       "공부\n목요일 3:00 pm ~ 6:00 pm",
-                                       "독서\n월요일 9:00 am ~ 10:00 am",
-                                       "운동\n수요일 1:00 pm ~ 2:00 pm",
-                                       "공부\n목요일 3:00 pm ~ 6:00 pm",
-                                       "독서\n월요일 9:00 am ~ 10:00 am",
-                                       "운동\n수요일 1:00 pm ~ 2:00 pm",
-                                       "공부\n목요일 3:00 pm ~ 6:00 pm",
-                                       "독서\n월요일 9:00 am ~ 10:00 am",
-                                       "운동\n수요일 1:00 pm ~ 2:00 pm",
-                                       "공부\n목요일 3:00 pm ~ 6:00 pm",
-                                       "독서\n월요일 9:00 am ~ 10:00 am",
-                                       "운동\n수요일 1:00 pm ~ 2:00 pm",
-                                       "공부\n목요일 3:00 pm ~ 6:00 pm",
-                                       "독서\n월요일 9:00 am ~ 10:00 am",
-                                       "운동\n수요일 1:00 pm ~ 2:00 pm",
-                                       "공부\n목요일 3:00 pm ~ 6:00 pm",
-                                       "독서\n월요일 9:00 am ~ 10:00 am",
-                                       "운동\n수요일 1:00 pm ~ 2:00 pm",
-                                       "공부\n목요일 3:00 pm ~ 6:00 pm",
-                                       "독서\n월요일 9:00 am ~ 10:00 am",
-                                       "운동\n수요일 1:00 pm ~ 2:00 pm",
-                                       "공부\n목요일 3:00 pm ~ 6:00 pm",
-                                       "독서\n월요일 9:00 am ~ 10:00 am",
-                                       "운동\n수요일 1:00 pm ~ 2:00 pm",
-                                       "공부\n목요일 3:00 pm ~ 6:00 pm"};
+    uhandler = UserDBHandler.open(getApplicationContext());
+    ucursor = uhandler.selectByCode("100");
+
+    testStringArray = new String[ucursor.getCount()];
+    index = 0;
+
+    if(ucursor != null && ucursor.getCount() != 0) {
+      ucursor.moveToFirst();
+
+      do {
+        String day = "";
+        int startHour = 0, endHour = 0;
+        int startMinVal = 0, endMinVal = 0;
+        String startMin = "", endMin = "";
+        String startAMPM = "", endAMPM = "";
+
+        int startMod = ucursor.getInt(2)%180;
+        int endMod = ucursor.getInt(3)%180;
+
+        switch((ucursor.getInt(2)-1)/180) {
+          case 0:
+            day = "월";
+            break;
+          case 1:
+            day = "화";
+            break;
+          case 2:
+            day = "수";
+            break;
+          case 3:
+            day = "목";
+            break;
+          case 4:
+            day = "금";
+            break;
+        }
+
+        startHour = (startMod - 1) / 12 + 7;
+
+        if(startHour < 12)
+          startAMPM = " am";
+        else
+          startAMPM = " pm";
+
+        if(startHour > 12)
+          startHour %= 12;
+
+        startMinVal = (startMod - 1) % 12 * 5;
+
+        if(startMinVal < 10)
+          startMin = "0" + Integer.toString(startMinVal);
+        else
+          startMin = Integer.toString(startMinVal);
+
+        endHour = (endMod - 1) / 12 + 7;
+
+        if(endHour < 12)
+          endAMPM = " am";
+        else
+          endAMPM = " pm";
+
+        if(endHour > 12)
+          endHour %= 12;
+
+        endMinVal = endMod%12 * 5;
+
+        if(endMinVal < 10)
+          endMin = "0" + Integer.toString(endMinVal);
+        else
+          endMin = Integer.toString(endMinVal);
+
+        String schdlStr = ucursor.getString(4) + "\n" + day + "요일 " + startHour + ":"
+            + startMin + startAMPM + " ~ " + endHour + ":" + endMin + endAMPM;
+
+        testStringArray[index++] = schdlStr;
+      } while (ucursor.moveToNext());
+    }
 
     scheduleListView = (ListView) findViewById(R.id.schedule_listview);
     TestAdapter ta = new TestAdapter(this, 0, testStringArray);
