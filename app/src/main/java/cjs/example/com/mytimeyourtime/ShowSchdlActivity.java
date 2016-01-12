@@ -24,6 +24,8 @@ public class ShowSchdlActivity extends Activity implements View.OnClickListener 
 
   private String[] testStringArray;
   private ListView scheduleListView;
+  private ArrayList<Integer> listItem;
+  private ArrayList<Integer> idArrayList;
   UserDBHandler uhandler;
   Cursor ucursor;
   int index;
@@ -44,10 +46,13 @@ public class ShowSchdlActivity extends Activity implements View.OnClickListener 
     testStringArray = new String[ucursor.getCount()];
     index = 0;
 
+    idArrayList = new ArrayList<Integer>();
+
     if(ucursor != null && ucursor.getCount() != 0) {
       ucursor.moveToFirst();
 
       do {
+
         String day = "";
         int startHour = 0, endHour = 0;
         int startMinVal = 0, endMinVal = 0;
@@ -92,7 +97,10 @@ public class ShowSchdlActivity extends Activity implements View.OnClickListener 
         else
           startMin = Integer.toString(startMinVal);
 
-        endHour = (endMod - 1) / 12 + 7;
+        if(endMod%12 == 0)
+          endHour = endMod/12 + 7;
+        else
+          endHour = (endMod - 1) / 12 + 7;
 
         if(endHour < 12)
           endAMPM = " am";
@@ -109,10 +117,18 @@ public class ShowSchdlActivity extends Activity implements View.OnClickListener 
         else
           endMin = Integer.toString(endMinVal);
 
+        if(ucursor.getInt(3)%180 == 0) {
+          endHour = 10;
+          endMin = "00";
+          endAMPM = " pm";
+        }
+
         String schdlStr = ucursor.getString(4) + "\n" + day + "요일 " + startHour + ":"
             + startMin + startAMPM + " ~ " + endHour + ":" + endMin + endAMPM;
 
         testStringArray[index++] = schdlStr;
+        idArrayList.add(ucursor.getInt(0));
+
       } while (ucursor.moveToNext());
     }
 
@@ -124,8 +140,6 @@ public class ShowSchdlActivity extends Activity implements View.OnClickListener 
   }
 
   private class TestAdapter extends ArrayAdapter<String> {
-
-    private ArrayList<Integer> listItem;
 
     public TestAdapter(Context context, int textViewResourceId, String[] items) {
 
@@ -210,8 +224,18 @@ public class ShowSchdlActivity extends Activity implements View.OnClickListener 
 
   public void onClick(View v) {
     if(v.getId() == R.id.del_schdl_btn){
+
+      int indexToDelete, idToDelete;
+
+      for(int i = 0; i < listItem.size(); i++ ) {
+        indexToDelete = listItem.get(i);
+        idToDelete = idArrayList.get(indexToDelete);
+        uhandler.deleteById(Integer.toString(idToDelete));
+      }
+
       setResult(1);
       finish();
+
     }
   }
 

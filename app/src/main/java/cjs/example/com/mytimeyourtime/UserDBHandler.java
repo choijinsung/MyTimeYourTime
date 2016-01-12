@@ -60,6 +60,14 @@ public class UserDBHandler {
 
   }
 
+  public void deleteById(String id) {
+
+   db = helper.getWritableDatabase();
+   db.delete("user", "_id = ?", new String[]{ id });
+    db.delete("sqlite_sequence", "name = ?", new String[]{ "user" });
+
+  }
+
   public void delete() {
 
     db = helper.getWritableDatabase();
