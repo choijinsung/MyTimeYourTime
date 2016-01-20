@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="250dp"
+              android:layout_height="150dp"
+              android:layout_gravity="center"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="10dp"
+              android:background="#FFFFFFFF">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="60dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="전체 삭제하시겠습니까?"
+                android:textColor="#FF3C09DA"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:paddingTop="10dp">
+
+        <Button
+                android:id="@+id/delete_btn"
+                android:layout_width="110dp"
+                android:layout_height="60dp"
+                android:text="삭제"
+                android:textColor="#FFFFFFFF"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:background="#FF7910DA"/>
+
+        <Button
+                android:id="@+id/cancel_btn"
+                android:layout_width="110dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:text="취소"
+                android:textColor="#FFFFFFFF"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:background="#FF6AB165"/>
+
+    </LinearLayout>
+
+</LinearLayout>

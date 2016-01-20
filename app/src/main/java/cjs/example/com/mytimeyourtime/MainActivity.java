@@ -10,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,6 +21,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
   private EditSelDialog editSelDialog;
   private DelSelDialog delSelDialog;
+  private DelEntireTtabDialog delEntireTtabDialog;
+  private DelEntireSchdlDialog delEntireSchdlDialog;
+  private DelEntireDialog delEntireDialog;
 
   Button btn1, btn13;
 
@@ -94,6 +96,7 @@ public class MainActivity extends Activity implements OnClickListener {
     }
   }
 
+  /* 시간표 선택 버튼 */
   private OnClickListener selTtabClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -102,6 +105,7 @@ public class MainActivity extends Activity implements OnClickListener {
     }
   };
 
+  /* 스케줄 작성 버튼 */
   private OnClickListener wrSchdlClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -110,13 +114,7 @@ public class MainActivity extends Activity implements OnClickListener {
     }
   };
 
-  private void createEditDialog() {
-    final View innerView = getLayoutInflater().inflate(R.layout.edit_sel_dialog, null);
-
-    editSelDialog = new EditSelDialog(this, selTtabClickListener, wrSchdlClickListener);
-    editSelDialog.show();
-  }
-
+  /* 시간표 선택 삭제 버튼 */
   private OnClickListener delTtabClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -125,6 +123,7 @@ public class MainActivity extends Activity implements OnClickListener {
     }
   };
 
+  /* 일정 선택 삭제 버튼 */
   private OnClickListener delSchdlClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -133,33 +132,120 @@ public class MainActivity extends Activity implements OnClickListener {
     }
   };
 
+  /* 시간표 전체 삭제 버튼 */
   private OnClickListener delEntireTtabClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
-      Toast.makeText(MainActivity.this, "555", Toast.LENGTH_SHORT).show();
+      createDelEntireTtabDialog();
     }
   };
 
+  /* 시간표 전체 삭제 버튼(두 번째 다이얼로그) */
+  private OnClickListener deleteEntireTtabClickListener = new OnClickListener() {
+    @Override
+    public void onClick(View v) {
+      uhandler.deleteLtCode("100");
+      delEntireTtabDialog.dismiss();
+    }
+  };
+
+  /* 시간표 전체 삭제 취소 버튼(두 번째 다이얼로그) */
+  private OnClickListener cancelEntireTtabClickListener = new OnClickListener() {
+    @Override
+    public void onClick(View v) {
+      delEntireTtabDialog.dismiss();
+    }
+  };
+
+  /* 일정 전체 삭제 버튼 */
   private OnClickListener delEntireSchdlClickListener = new OnClickListener() {
+    @Override
+    public void onClick(View view) {
+      createDelEntireSchdlDialog();
+    }
+  };
+
+  /* 일정 전체 삭제 버튼(두 번째 다이얼로그) */
+  private OnClickListener deleteEntireSchdlClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
       uhandler.deleteByCode("100");
+      delEntireSchdlDialog.dismiss();
     }
   };
 
+  /* 일정 전체 삭제 취소 버튼(두 번째 다이얼로그) */
+  private OnClickListener cancelEntireSchdlClickListener = new OnClickListener() {
+    @Override
+    public void onClick(View v) {
+      delEntireSchdlDialog.dismiss();
+    }
+  };
+
+  /* 전체 삭제 버튼 */
   private OnClickListener delEntireClickListener = new OnClickListener() {
     @Override
     public void onClick(View v) {
-      Toast.makeText(MainActivity.this, "777", Toast.LENGTH_SHORT).show();
+      createDelEntireDialog();
     }
   };
 
+  /* 전체 삭제 버튼(두 번째 다이얼로그) */
+  private OnClickListener deleteEntireClickListener = new OnClickListener() {
+    @Override
+    public void onClick(View v) {
+      uhandler.delete();
+      delEntireDialog.dismiss();
+    }
+  };
+
+  /* 전체 삭제 취소 버튼(두 번째 다이얼로그) */
+  private OnClickListener cancelEntireClickListener = new OnClickListener() {
+    @Override
+    public void onClick(View v) {
+      delEntireDialog.dismiss();
+    }
+  };
+
+  /* 편집 다이얼로그 */
+  private void createEditDialog() {
+    final View innerView = getLayoutInflater().inflate(R.layout.edit_sel_dialog, null);
+
+    editSelDialog = new EditSelDialog(this, selTtabClickListener, wrSchdlClickListener);
+    editSelDialog.show();
+  }
+
+  /* 삭제 다이얼로그 */
   private void createDelDialog() {
     final View innerView = getLayoutInflater().inflate(R.layout.del_sel_dialog, null);
 
     delSelDialog = new DelSelDialog(this, delTtabClickListener, delSchdlClickListener
-    , delEntireTtabClickListener, delEntireSchdlClickListener, delEntireClickListener);
+        , delEntireTtabClickListener, delEntireSchdlClickListener, delEntireClickListener);
     delSelDialog.show();
+  }
+
+  /* 시간표 전체 삭제 다이얼로그 */
+  private void createDelEntireTtabDialog() {
+    final View innerView = getLayoutInflater().inflate(R.layout.del_entire_ttab_dialog, null);
+
+    delEntireTtabDialog = new DelEntireTtabDialog(this, deleteEntireTtabClickListener, cancelEntireTtabClickListener);
+    delEntireTtabDialog.show();
+  }
+
+  /* 일정 전체 삭제 다이얼로그 */
+  private void createDelEntireSchdlDialog() {
+    final View innerView = getLayoutInflater().inflate(R.layout.del_entire_schdl_dialog, null);
+
+    delEntireSchdlDialog = new DelEntireSchdlDialog(this, deleteEntireSchdlClickListener, cancelEntireSchdlClickListener);
+    delEntireSchdlDialog.show();
+  }
+
+  /* 전체 삭제 다이얼로그 */
+  private void createDelEntireDialog() {
+    final View innerView = getLayoutInflater().inflate(R.layout.del_entire_dialog, null);
+
+    delEntireDialog = new DelEntireDialog(this, deleteEntireClickListener, cancelEntireClickListener);
+    delEntireDialog.show();
   }
 
   @Override
