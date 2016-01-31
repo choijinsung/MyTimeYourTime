@@ -83,8 +83,9 @@ public class CourseDBHandler {
         int code = c.getInt(1);
         String start_tim = c.getString(2);
         String end_tim = c.getString(3);
+        String color = c.getString(4);
 
-        Log.i("myTag", _id + " " + code + " " + start_tim + " " + end_tim);
+        Log.i("myTag", _id + " " + code + " " + start_tim + " " + end_tim + " " + color);
 
       } while (c.moveToNext());
     }

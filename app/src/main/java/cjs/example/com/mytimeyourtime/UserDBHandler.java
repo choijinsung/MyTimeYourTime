@@ -109,7 +109,6 @@ public class UserDBHandler {
 
     db = helper.getReadableDatabase();
     Cursor c = db.rawQuery("SELECT * FROM user", null);
-
     return c;
   }
 
